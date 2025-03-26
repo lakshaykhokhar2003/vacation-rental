@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { SearchForm } from "@/components/search-form"
-import { PropertyCard } from "@/components/property-card"
+import { PropertyCard } from "@/components/property/property-card"
 import { FeaturedDestinations } from "@/components/featured-destinations"
 import { SpecialOffers } from "@/components/special-offers"
 import { Testimonials } from "@/components/testimonials"
