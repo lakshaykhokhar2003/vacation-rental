@@ -11,9 +11,8 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "StayScape - Find Your Perfect Vacation Rental",
+  title: "StayHere - Find Your Perfect Vacation Rental",
   description: "Discover and book unique accommodations around the world",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
