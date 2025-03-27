@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="675ae280-a195-405f-b575-f09ff53225f6" name="Changes" comment="feat(added): availability page for the property">
+      <change beforePath="$PROJECT_DIR$/app/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/login/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/signup/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/booking-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/booking-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/booking-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/booking-list.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/property/property-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/property/property-list.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/toaster.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/toaster.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="90d155f7-79c0-47cc-bcd6-af56d3ef0095" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2uqcLh7zi0UIUQ0nR9HET9bCCZ4" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\laksh\\WebstormProjects\\Assignment\\vacation-rental\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\laksh\WebstormProjects\Assignment\vacation-rental\hooks" />
+      <recent name="C:\Users\laksh\WebstormProjects\Assignment\vacation-rental\components\property" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.24807.6" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="675ae280-a195-405f-b575-f09ff53225f6" name="Changes" comment="" />
+      <created>1742979493462</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742979493462</updated>
+      <workItem from="1742979494919" duration="5692000" />
+      <workItem from="1743008314591" duration="10343000" />
+      <workItem from="1743063705682" duration="2787000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat(added): ShadCN UI components">
+      <option name="closed" value="true" />
+      <created>1743017825927</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743017825927</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat(added): ShadCN UI components">
+      <option name="closed" value="true" />
+      <created>1743017872553</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743017872553</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat(changes): made changes to layout and some other files">
+      <option name="closed" value="true" />
+      <created>1743018194522</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743018194522</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat(added): ShadCN UI components">
+      <option name="closed" value="true" />
+      <created>1743018292947</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743018292947</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat(added): Firebase Authentication With Google Login">
+      <option name="closed" value="true" />
+      <created>1743018371921</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743018371921</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat(added): Login &amp; Signup page with middleware">
+      <option name="closed" value="true" />
+      <created>1743018469433</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743018469433</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat(added): Navbar &amp; Footer">
+      <option name="closed" value="true" />
+      <created>1743018752605</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743018752605</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat(added): tailwind config">
+      <option name="closed" value="true" />
+      <created>1743018828063</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1743018828063</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat(added): home page components">
+      <option name="closed" value="true" />
+      <created>1743019059641</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743019059641</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(added): home page components">
+      <option name="closed" value="true" />
+      <created>1743019086206</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743019086206</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat(added): added property details (amenities, gallery, list, reviews and etc)">
+      <option name="closed" value="true" />
+      <created>1743066369231</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743066369231</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat(added): dashboard page">
+      <option name="closed" value="true" />
+      <created>1743066473737</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1743066473737</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat(added): property page">
+      <option name="closed" value="true" />
+      <created>1743066810517</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1743066810517</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat(added): property page">
+      <option name="closed" value="true" />
+      <created>1743067112225</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1743067112225</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat(added): new property page">
+      <option name="closed" value="true" />
+      <created>1743067163185</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1743067163185</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat(added): availability page for the property">
+      <option name="closed" value="true" />
+      <created>1743067315360</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1743067315360</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat(changes): made changes to layout and some other files" />
+    <MESSAGE value="feat(added): ShadCN UI components" />
+    <MESSAGE value="feat(added): Firebase Authentication With Google Login" />
+    <MESSAGE value="feat(added): Login &amp; Signup page with middleware" />
+    <MESSAGE value="feat(added): Navbar &amp; Footer" />
+    <MESSAGE value="feat(added): tailwind config" />
+    <MESSAGE value="feat(added): home page components" />
+    <MESSAGE value="feat(added): added property details (amenities, gallery, list, reviews and etc)" />
+    <MESSAGE value="feat(added): dashboard page" />
+    <MESSAGE value="feat(added): property page" />
+    <MESSAGE value="feat(added): new property page" />
+    <MESSAGE value="feat(added): availability page for the property" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(added): availability page for the property" />
+  </component>
+</project>
