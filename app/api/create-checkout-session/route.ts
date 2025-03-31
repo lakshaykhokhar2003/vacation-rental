@@ -20,22 +20,8 @@ export async function POST(request: Request) {
             nights,
             subtotal,
             serviceFee,
-            total,
         } = body
-        console.log(  propertyId,
-            propertyTitle,
-            bookingId,
-            checkIn,
-            checkOut,
-            guests,
-            guestInfo,
-            nights,
-            subtotal,
-            serviceFee,
-            total)
 
-
-        // Create a Stripe checkout session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             line_items: [
@@ -46,7 +32,7 @@ export async function POST(request: Request) {
                             name: propertyTitle,
                             description: `${nights} night stay from ${new Date(checkIn).toLocaleDateString()} to ${new Date(checkOut).toLocaleDateString()} for ${guests} guests`,
                         },
-                        unit_amount: subtotal * 100, // Stripe uses cents
+                        unit_amount: subtotal * 100,
                     },
                     quantity: 1,
                 },
@@ -57,7 +43,7 @@ export async function POST(request: Request) {
                             name: "Service Fee",
                             description: "Service fee for booking",
                         },
-                        unit_amount: serviceFee * 100, // Stripe uses cents
+                        unit_amount: serviceFee * 100,
                     },
                     quantity: 1,
                 },
