@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
-import { setCookie } from 'cookies-next';
 import {GoogleBtn} from "@/components/GoogleLogin/GoogleBtn";
 
 
@@ -44,7 +43,6 @@ export default function Login() {
         title: "Welcome back!",
         description: "You have successfully logged in.",
       })
-      setCookie('auth',values.email)
       router.push("/dashboard")
     } catch (error: any) {
       toast({

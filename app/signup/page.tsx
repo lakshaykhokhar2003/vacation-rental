@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
+import {GoogleBtn} from "@/components/GoogleLogin/GoogleBtn";
 
 const formSchema = z
   .object({
@@ -129,13 +130,14 @@ export default function SignUp() {
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex justify-center">
+          <CardFooter className="flex flex-col justify-center">
             <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
               <Link href="/login" className="text-primary hover:underline">
                 Sign in
               </Link>
             </p>
+            <GoogleBtn />
           </CardFooter>
         </Card>
       </motion.div>
