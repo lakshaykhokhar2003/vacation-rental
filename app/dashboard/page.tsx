@@ -10,7 +10,7 @@ import {BookingList} from "@/components/booking-list"
 import {useAuth} from "@/contexts/auth-context"
 import {useUserProperties} from "@/hooks/use-properties"
 import {useUserBookings} from "@/hooks/use-bookings"
-import {Calendar, Database, Home, Loader2, Plus, Trash2} from "lucide-react"
+import {Calendar, Home, Loader2, Plus} from "lucide-react"
 
 export default function Dashboard() {
   const { user, loading } = useAuth()
@@ -58,16 +58,6 @@ export default function Dashboard() {
             <Button asChild>
               <Link href="/dashboard/properties/new">
                 <Plus className="mr-2 h-4 w-4" /> Add Property
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/admin/generate-mock-data">
-                <Database className="mr-2 h-4 w-4" /> Generate Mock Data
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <Link href="/admin/delete-mock-data">
-                <Trash2 className="mr-2 h-4 w-4" /> Delete Mock Data
               </Link>
             </Button>
           </div>
