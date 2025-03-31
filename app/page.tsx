@@ -1,305 +1,182 @@
-import Image from "next/image"
-import { SearchForm } from "@/components/search-form"
-import { PropertyCard } from "@/components/property/property-card"
-import { FeaturedDestinations } from "@/components/featured-destinations"
-import { SpecialOffers } from "@/components/special-offers"
-import { Testimonials } from "@/components/testimonials"
-import { Button } from "@/components/ui/button"
+"use client"
+import Link from "next/link"
+import {motion} from "framer-motion"
+import {Button} from "@/components/ui/button"
+import {Card, CardContent} from "@/components/ui/card"
+import {Skeleton} from "@/components/ui/skeleton"
+import {useFeaturedProperties} from "@/hooks/use-properties"
+import {PropertyCard} from "@/components/property/property-card";
+import type React from "react";
 
 export default function Home() {
+  const { data: properties, isLoading, error } = useFeaturedProperties()
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[600px] w-full">
-        <Image
-          src="/placeholder.svg?height=1200&width=2000"
-          alt="Beautiful vacation destination"
-          fill
-          className="object-cover brightness-75"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20" />
-        <div className="container relative z-10 mx-auto flex h-full flex-col items-center justify-center px-4 text-center text-white">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">Find Your Perfect Getaway</h1>
-          <p className="mb-8 max-w-2xl text-lg md:text-xl">Discover and book unique accommodations around the world</p>
-          <div className="w-full max-w-4xl rounded-lg bg-white p-4 shadow-lg">
-            <SearchForm />
+      <div>
+        <section className="relative h-[70vh] min-h-[500px] w-full bg-gradient-to-r from-blue-600 to-indigo-700">
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="container relative z-10 mx-auto flex h-full flex-col items-center justify-center px-4 text-center text-white">
+            <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl"
+            >
+              Find Your Perfect Vacation Rental
+            </motion.h1>
+            <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mb-8 max-w-2xl text-lg md:text-xl"
+            >
+              Discover amazing properties around the world for your next adventure
+            </motion.p>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Button asChild size="lg" className="text-lg">
+                <Link href="#">Explore Properties</Link>
+              </Button>
+            </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Featured Properties */}
-      <section className="container mx-auto py-16 px-4">
-        <div className="mb-10 flex items-center justify-between">
-          <h2 className="text-3xl font-bold">Featured Properties</h2>
-          <Button variant="outline">View All</Button>
-        </div>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {featuredProperties.map((property) => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
-        </div>
-      </section>
+        <section id="featured-properties" className="container mx-auto py-16 px-4">
+          <h2 className="mb-8 text-3xl font-bold">Featured Properties</h2>
 
-      {/* Featured Destinations */}
-      <section className="bg-slate-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="mb-10 text-3xl font-bold">Popular Destinations</h2>
-          <FeaturedDestinations destinations={popularDestinations} />
-        </div>
-      </section>
+          {isLoading ? (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {Array.from({ length: 8 }).map((_, index) => (
+                    <Card key={index} className="overflow-hidden">
+                      <Skeleton className="aspect-[4/3] w-full" />
+                      <CardContent className="p-4">
+                        <Skeleton className="h-6 w-3/4 mb-2" />
+                        <Skeleton className="h-4 w-1/2 mb-4" />
+                        <div className="flex justify-between">
+                          <Skeleton className="h-4 w-1/4" />
+                          <Skeleton className="h-4 w-1/4" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                ))}
+              </div>
+          ) : error ? (
+              <div className="text-center py-8">
+                <p className="text-red-500">Failed to load properties. Please try again later.</p>
+              </div>
+          ) : (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {properties?.map((property) => (
+                    <motion.div
+                        key={property.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                      <PropertyCard key={property.id} property={property} />
+                    </motion.div>
+                ))}
+              </div>
+          )}
 
-      {/* Special Offers */}
-      <section className="container mx-auto py-16 px-4">
-        <h2 className="mb-10 text-3xl font-bold">Special Offers</h2>
-        <SpecialOffers offers={specialOffers} />
-      </section>
+          <div className="mt-8 text-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/properties">View All Properties</Link>
+            </Button>
+          </div>
+        </section>
 
-      {/* Testimonials */}
-      <section className="bg-slate-50 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="mb-10 text-center text-3xl font-bold">What Our Guests Say</h2>
-          <Testimonials testimonials={testimonials} />
-        </div>
-      </section>
-
-      {/* App Download */}
-      <section className="container mx-auto py-16 px-4">
-        <div className="flex flex-col items-center justify-between gap-8 rounded-2xl bg-primary p-8 text-white md:flex-row">
-          <div className="max-w-xl">
-            <h2 className="mb-4 text-3xl font-bold">Download Our App</h2>
-            <p className="mb-6 text-lg">
-              Book and manage your stays on the go. Get real-time notifications and exclusive mobile deals.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button variant="secondary" size="lg">
-                App Store
-              </Button>
-              <Button variant="secondary" size="lg">
-                Google Play
-              </Button>
+        <section className="bg-slate-50 py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="mb-12 text-center text-3xl font-bold">Why Choose Our Rentals</h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-8 w-8 text-primary"
+                  >
+                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                  </svg>
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Handpicked Properties</h3>
+                <p className="text-muted-foreground">
+                  We carefully select each property to ensure quality and comfort for our guests.
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-8 w-8 text-primary"
+                  >
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                  </svg>
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">Best Price Guarantee</h3>
+                <p className="text-muted-foreground">
+                  We offer competitive prices and special deals for our valued customers.
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-8 w-8 text-primary"
+                  >
+                    <path d="M18 6H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h13l4-3.5L18 6Z" />
+                    <path d="M12 13v8" />
+                    <path d="M5 13v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6" />
+                  </svg>
+                </div>
+                <h3 className="mb-2 text-xl font-semibold">24/7 Customer Support</h3>
+                <p className="text-muted-foreground">
+                  Our dedicated team is always available to assist you with any questions or concerns.
+                </p>
+              </div>
             </div>
           </div>
-          <div className="relative h-[300px] w-[200px]">
-            <Image
-              src="/placeholder.svg?height=600&width=400"
-              alt="Mobile app screenshot"
-              fill
-              className="object-contain"
-            />
+        </section>
+
+        <section className="container mx-auto py-16 px-4">
+          <div className="rounded-xl bg-primary p-8 text-center text-white md:p-12">
+            <h2 className="mb-4 text-3xl font-bold">Ready to Find Your Perfect Getaway?</h2>
+            <p className="mx-auto mb-8 max-w-2xl text-lg">
+              Browse our selection of vacation rentals and book your dream destination today.
+            </p>
+            <Button asChild size="lg" variant="secondary">
+              <Link href="/properties">Explore All Properties</Link>
+            </Button>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
   )
 }
-
-// Sample data
-const featuredProperties = [
-  {
-    id: 1,
-    title: "Luxury Beach Villa",
-    location: "Malibu, California",
-    price: 350,
-    rating: 4.9,
-    reviews: 128,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 4,
-    baths: 3,
-    guests: 8,
-    amenities: ["Pool", "Ocean View", "WiFi", "Kitchen"],
-    isSuperhost: true,
-  },
-  {
-    id: 2,
-    title: "Mountain Retreat Cabin",
-    location: "Aspen, Colorado",
-    price: 275,
-    rating: 4.8,
-    reviews: 96,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 3,
-    baths: 2,
-    guests: 6,
-    amenities: ["Fireplace", "Hot Tub", "WiFi", "Mountain View"],
-    isSuperhost: false,
-  },
-  {
-    id: 3,
-    title: "Modern Downtown Loft",
-    location: "New York City, New York",
-    price: 225,
-    rating: 4.7,
-    reviews: 84,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 2,
-    baths: 2,
-    guests: 4,
-    amenities: ["City View", "WiFi", "Gym", "Doorman"],
-    isSuperhost: true,
-  },
-  {
-    id: 4,
-    title: "Lakefront Cottage",
-    location: "Lake Tahoe, Nevada",
-    price: 195,
-    rating: 4.6,
-    reviews: 72,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 2,
-    baths: 1,
-    guests: 4,
-    amenities: ["Lake View", "Dock", "WiFi", "Kayaks"],
-    isSuperhost: false,
-  },
-  {
-    id: 5,
-    title: "Tropical Paradise Villa",
-    location: "Kauai, Hawaii",
-    price: 420,
-    rating: 4.9,
-    reviews: 156,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 5,
-    baths: 4,
-    guests: 10,
-    amenities: ["Pool", "Ocean View", "Garden", "BBQ"],
-    isSuperhost: true,
-  },
-  {
-    id: 6,
-    title: "Historic Downtown Apartment",
-    location: "Charleston, South Carolina",
-    price: 185,
-    rating: 4.7,
-    reviews: 64,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 1,
-    baths: 1,
-    guests: 2,
-    amenities: ["Historic District", "WiFi", "Balcony"],
-    isSuperhost: false,
-  },
-  {
-    id: 7,
-    title: "Desert Oasis with Pool",
-    location: "Scottsdale, Arizona",
-    price: 310,
-    rating: 4.8,
-    reviews: 92,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 3,
-    baths: 2,
-    guests: 6,
-    amenities: ["Pool", "Hot Tub", "Mountain View", "WiFi"],
-    isSuperhost: true,
-  },
-  {
-    id: 8,
-    title: "Cozy Ski-in/Ski-out Chalet",
-    location: "Park City, Utah",
-    price: 340,
-    rating: 4.9,
-    reviews: 108,
-    image: "/placeholder.svg?height=500&width=800",
-    beds: 4,
-    baths: 3,
-    guests: 8,
-    amenities: ["Ski-in/Ski-out", "Fireplace", "Hot Tub", "Mountain View"],
-    isSuperhost: false,
-  },
-]
-
-const popularDestinations = [
-  {
-    id: 1,
-    name: "New York",
-    image: "/placeholder.svg?height=400&width=600",
-    properties: 1243,
-  },
-  {
-    id: 2,
-    name: "Miami",
-    image: "/placeholder.svg?height=400&width=600",
-    properties: 932,
-  },
-  {
-    id: 3,
-    name: "Los Angeles",
-    image: "/placeholder.svg?height=400&width=600",
-    properties: 1587,
-  },
-  {
-    id: 4,
-    name: "Chicago",
-    image: "/placeholder.svg?height=400&width=600",
-    properties: 745,
-  },
-  {
-    id: 5,
-    name: "San Francisco",
-    image: "/placeholder.svg?height=400&width=600",
-    properties: 865,
-  },
-  {
-    id: 6,
-    name: "Las Vegas",
-    image: "/placeholder.svg?height=400&width=600",
-    properties: 1123,
-  },
-]
-
-const specialOffers = [
-  {
-    id: 1,
-    title: "Last Minute Deals",
-    description: "Save up to 25% on stays in the next 14 days",
-    image: "/placeholder.svg?height=400&width=600",
-    discount: "25%",
-  },
-  {
-    id: 2,
-    title: "Weekly Stays",
-    description: "Stay longer and save more with weekly rates",
-    image: "/placeholder.svg?height=400&width=600",
-    discount: "15%",
-  },
-  {
-    id: 3,
-    title: "Early Bird Special",
-    description: "Book 60 days in advance for special rates",
-    image: "/placeholder.svg?height=400&width=600",
-    discount: "20%",
-  },
-]
-
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    location: "New York, USA",
-    comment:
-      "We had an amazing stay at the beach villa. The views were spectacular and the amenities were top-notch. Will definitely book again!",
-    rating: 5,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    location: "Toronto, Canada",
-    comment:
-      "The mountain cabin exceeded our expectations. Perfect location for skiing and the hot tub was a great way to relax after a day on the slopes.",
-    rating: 5,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 3,
-    name: "Emma Rodriguez",
-    location: "London, UK",
-    comment:
-      "The downtown loft was stylish and in the perfect location. We could walk to all the best restaurants and attractions.",
-    rating: 4,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-]
 
