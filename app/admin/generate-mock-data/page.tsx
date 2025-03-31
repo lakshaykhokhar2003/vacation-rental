@@ -10,12 +10,10 @@ export default function GenerateMockDataPage() {
     const router = useRouter()
 
     useEffect(() => {
-        // Redirect if not logged in
         if (!loading && !user) {
             router.push("/login")
         }
 
-        // Redirect if not the specified user
         if (!loading && user && user.email !== "lakshaykhokhar2003@gmail.com") {
             router.push("/dashboard")
         }
