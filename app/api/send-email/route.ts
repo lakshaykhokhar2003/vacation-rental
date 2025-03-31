@@ -5,7 +5,6 @@ import {BookingConfirmationEmail} from "@/components/EmailConformation";
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
-    console.log("hi")
 
     try {
         const {
@@ -21,7 +20,7 @@ export async function POST(request: Request) {
 
 
         const data = await resend.emails.send({
-            from: 'Bookings <lakshaykhokhar@stayhere.com>',
+            from: 'noreply@resend.dev',
             to: guestEmail,
             subject: `Booking Confirmation #${bookingId}`,
             react: BookingConfirmationEmail({
