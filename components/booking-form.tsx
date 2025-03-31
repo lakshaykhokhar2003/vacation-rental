@@ -18,6 +18,7 @@ import {useAuth} from "@/contexts/auth-context"
 import {useCheckAvailability, useCreateBooking} from "@/hooks/use-bookings"
 import {Timestamp} from "firebase/firestore"
 import {loadStripe} from "@stripe/stripe-js"
+import SignInPrompt from "@/components/SignInPrompt";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "")
 
@@ -68,6 +69,8 @@ export function BookingForm({ property }: BookingFormProps) {
   const today = new Date()
   const sixMonthsFromNow = addDays(today, 180)
 
+  if(!user) return <SignInPrompt/>
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,7 +92,7 @@ export function BookingForm({ property }: BookingFormProps) {
     }
   }, [user, form])
 
-  const { watch, setValue, getValues } = form
+  const {watch, setValue, getValues} = form
   const checkIn = watch("checkIn")
   const checkOut = watch("checkOut")
   const guestsCount = watch("guests")
@@ -230,6 +233,7 @@ export function BookingForm({ property }: BookingFormProps) {
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+
     if (step === 1) {
       const available = await checkPropertyAvailability()
 
