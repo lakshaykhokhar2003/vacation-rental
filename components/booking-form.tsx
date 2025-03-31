@@ -84,7 +84,7 @@ export function BookingForm({ property }: BookingFormProps) {
 
   useEffect(() => {
     if (user) {
-      form.setValue("name", user.displayName || alternateName)
+      form.setValue("name", user.displayName || alternateName || "")
       form.setValue("email", user.email || "")
     }
   }, [user, form])
