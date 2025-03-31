@@ -1,19 +1,16 @@
-import { db } from "@/lib/firebase"
+import {db} from "@/lib/firebase"
 import {
+    addDoc,
     collection,
     doc,
-    addDoc,
+    type DocumentData,
     getDoc,
     getDocs,
-    updateDoc,
-    deleteDoc,
-    query,
-    where,
     orderBy,
-    limit,
-    Timestamp,
-    type DocumentData,
+    query,
     type QueryDocumentSnapshot,
+    Timestamp,
+    where,
 } from "firebase/firestore"
 
 export interface Booking {
@@ -40,16 +37,10 @@ export interface Booking {
     updatedAt?: Timestamp
 }
 
-// Create a new booking
 export const createBooking = async (bookingData: Omit<Booking, "id">): Promise<string> => {
     try {
-        // Add timestamps if not provided
-        if (!bookingData.createdAt) {
-            bookingData.createdAt = Timestamp.now()
-        }
-        if (!bookingData.updatedAt) {
-            bookingData.updatedAt = Timestamp.now()
-        }
+        if (!bookingData.createdAt) bookingData.createdAt = Timestamp.now()
+        if (!bookingData.updatedAt) bookingData.updatedAt = Timestamp.now()
 
         const bookingsCollection = collection(db, "bookings")
         const docRef = await addDoc(bookingsCollection, bookingData)
@@ -60,7 +51,6 @@ export const createBooking = async (bookingData: Omit<Booking, "id">): Promise<s
     }
 }
 
-// Get a booking by ID
 export const getBooking = async (bookingId: string): Promise<Booking> => {
     try {
         const bookingRef = doc(db, "bookings", bookingId)
@@ -80,33 +70,7 @@ export const getBooking = async (bookingId: string): Promise<Booking> => {
     }
 }
 
-// Update a booking
-export const updateBooking = async (bookingId: string, bookingData: Partial<Booking>): Promise<void> => {
-    try {
-        const bookingRef = doc(db, "bookings", bookingId)
 
-        // Add updated timestamp
-        bookingData.updatedAt = Timestamp.now()
-
-        await updateDoc(bookingRef, bookingData)
-    } catch (error: any) {
-        console.error("Error updating booking:", error)
-        throw new Error(error.message || "Failed to update booking")
-    }
-}
-
-// Delete a booking
-export const deleteBooking = async (bookingId: string): Promise<void> => {
-    try {
-        const bookingRef = doc(db, "bookings", bookingId)
-        await deleteDoc(bookingRef)
-    } catch (error: any) {
-        console.error("Error deleting booking:", error)
-        throw new Error(error.message || "Failed to delete booking")
-    }
-}
-
-// Get bookings by user ID
 export const getUserBookings = async (userId: string): Promise<Booking[]> => {
     try {
         const bookingsCollection = collection(db, "bookings")
@@ -123,7 +87,6 @@ export const getUserBookings = async (userId: string): Promise<Booking[]> => {
     }
 }
 
-// Get bookings by property ID
 export const getPropertyBookings = async (propertyId: string): Promise<Booking[]> => {
     try {
         const bookingsCollection = collection(db, "bookings")
@@ -140,29 +103,11 @@ export const getPropertyBookings = async (propertyId: string): Promise<Booking[]
     }
 }
 
-// Get recent bookings
-export const getRecentBookings = async (limitCount = 5): Promise<Booking[]> => {
-    try {
-        const bookingsCollection = collection(db, "bookings")
-        const q = query(bookingsCollection, orderBy("createdAt", "desc"), limit(limitCount))
 
-        const querySnapshot = await getDocs(q)
-        return querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        })) as Booking[]
-    } catch (error: any) {
-        console.error("Error fetching recent bookings:", error)
-        throw new Error(error.message || "Failed to fetch bookings")
-    }
-}
-
-// Check availability for a property
 export const checkAvailability = async (propertyId: string | number, checkIn: Date, checkOut: Date): Promise<boolean> => {
     try {
         const bookingsCollection = collection(db, "bookings")
 
-        // Query for any bookings that overlap with the requested dates
         const q = query(
             bookingsCollection,
             where("propertyId", "==", propertyId),
@@ -172,43 +117,23 @@ export const checkAvailability = async (propertyId: string | number, checkIn: Da
 
         const querySnapshot = await getDocs(q)
 
-        // Check if any of the bookings overlap with the requested dates
         for (const doc of querySnapshot.docs) {
             const booking = doc.data()
             const bookingCheckIn = booking.checkIn.toDate()
             const bookingCheckOut = booking.checkOut.toDate()
 
-            // Check if there's an overlap
             if (
                 (bookingCheckIn <= checkOut && bookingCheckOut >= checkIn) ||
                 (checkIn <= bookingCheckOut && checkOut >= bookingCheckIn)
             ) {
-                return false // There's an overlap, not available
+                return false
             }
         }
 
-        return true // No overlaps found, available
+        return true
     } catch (error: any) {
         console.error("Error checking availability:", error)
         throw new Error(error.message || "Failed to check availability")
-    }
-}
-
-// Update booking status
-export const updateBookingStatus = async (
-    bookingId: string,
-    status: "pending" | "confirmed" | "cancelled" | "completed",
-): Promise<void> => {
-    try {
-        const bookingRef = doc(db, "bookings", bookingId)
-
-        await updateDoc(bookingRef, {
-            status,
-            updatedAt: Timestamp.now(),
-        })
-    } catch (error: any) {
-        console.error("Error updating booking status:", error)
-        throw new Error(error.message || "Failed to update booking status")
     }
 }
 
