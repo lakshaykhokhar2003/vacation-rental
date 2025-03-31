@@ -11,7 +11,10 @@ import {
   signOut, GoogleAuthProvider, signInWithPopup,
 } from "firebase/auth"
 import { auth } from "@/lib/firebase"
-import {setCookie} from "cookies-next";
+import {getCookie, setCookie} from "cookies-next";
+import {addDays} from "date-fns";
+import {useRouter} from "next/navigation";
+import {createOrUpdateUser} from "@/lib/services/user-service";
 
 interface AuthContextType {
   user: User | null
@@ -34,24 +37,42 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const authCookie = getCookie('auth');
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user)
-      setLoading(false)
-    })
+    const signOutUser = async () => {
+      if (!authCookie) {
+        await signOut(auth);
+        setUser(null);
+      } else {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          setUser(user)
+          setLoading(false)
+        })
+        return () => unsubscribe()
+      }
+    }
 
-    return () => unsubscribe()
-  }, [])
+    signOutUser();
+  }, [authCookie])
+
 
   const signUp = async (email: string, password: string) => {
-    await createUserWithEmailAndPassword(auth, email, password)
+    const response = await createUserWithEmailAndPassword(auth, email, password)
+    const data = response.user
+    await createOrUpdateUser({uid: data?.uid, email: email, displayName: data?.displayName ? data?.displayName : (data?.email as string).slice(0, (data?.email as string).indexOf("@")), role: 'guest'})
+    setUser(data)
+    setCookie('auth',email,{expires: addDays(new Date(),30)});
   }
 
   const signIn = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password)
+    const response = await signInWithEmailAndPassword(auth, email, password)
+    await createOrUpdateUser({uid: response.user.uid})
+    setUser(response.user)
+    setCookie('auth',response.user.email,{expires: addDays(new Date(),30)});
   }
 
   const signInWithGoogle = async () => {
@@ -59,7 +80,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const provider = new GoogleAuthProvider();
       const response = await signInWithPopup(auth, provider);
       setUser(response.user);
-      setCookie('auth',response.user.email)
+      setCookie('auth',response.user.email,{expires: addDays(new Date(),30)});
+      await createOrUpdateUser({uid: response.user.uid, email:( response.user.email as string), displayName: (response.user.displayName as string) ,photoURL: response.user.photoURL || "",})
+      router.push('/')
     } catch (error) {
         console.log("An unknown error occurred");
     }
@@ -67,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logOut = async () => {
     await signOut(auth)
+    router.push('/')
   }
 
   return <AuthContext.Provider value={{ user, loading, signUp, signIn, signInWithGoogle,logOut }}>{children}</AuthContext.Provider>
