@@ -60,7 +60,7 @@ export function BookingForm({ property }: BookingFormProps) {
   const [bookedDates, _] = useState<Date[]>([])
   const { toast } = useToast()
   const { user } = useAuth()
-  const alternateName = (user?.email as string).slice(0, (user?.email as string).indexOf("@"))
+  const alternateName = user?.email && user?.email?.slice(0, user?.email.indexOf("@"))
 
   const createBookingMutation = useCreateBooking()
   const checkAvailabilityMutation = useCheckAvailability()
