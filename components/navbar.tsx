@@ -2,10 +2,9 @@
 
 import {useState} from "react"
 import Link from "next/link"
-import Image from "next/image"
 import {Button} from "@/components/ui/button"
 import {Globe, Heart, LogIn, LogOut, Menu, MessageSquare, PlusCircle, User, X} from "lucide-react"
-import {useMediaQuery} from "@/hooks/use-media-query"
+import {useMediaQuery} from "react-responsive";
 import {useAuth} from "@/contexts/auth-context"
 import {
   DropdownMenu,
@@ -18,7 +17,7 @@ import {deleteCookie} from "cookies-next";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const isMobile = useMediaQuery("(max-width: 768px)")
+  const isMobile = useMediaQuery({maxWidth: 768})
   const { user, logOut } = useAuth()
 
   const handleLogout = () => {
@@ -29,19 +28,15 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        {/* Logo */}
+
         <Link href="/" className="flex items-center gap-2">
-          <div className="relative h-8 w-8">
-            <Image src="/placeholder.svg?height=32&width=32" alt="StayHere Logo" fill className="object-contain" />
-          </div>
           <span className="text-xl font-bold text-primary">StayHere</span>
         </Link>
 
-        {/* Desktop Navigation */}
         {!isMobile && (
           <nav className="hidden md:flex md:items-center md:gap-6">
-            <Link href="#" className="text-sm font-medium hover:text-primary">
-              Find Rentals
+            <Link href="/properties" className="text-sm font-medium hover:text-primary">
+              All Properties
             </Link>
             <Link href="#" className="text-sm font-medium hover:text-primary">
               Destinations
@@ -87,7 +82,7 @@ export function Navbar() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/bookings">My Bookings</Link>
+                    <Link href="/dashboard">My Bookings</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout}>
