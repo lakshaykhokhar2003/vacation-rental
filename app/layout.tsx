@@ -2,11 +2,14 @@ import type React from "react"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { AuthProvider } from "@/contexts/auth-context"
+import { QueryProvider } from "@/lib/providers/query-provider"
 import { Toaster } from "@/components/ui/toaster"
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
+import { extractRouterConfig } from "uploadthing/server"
+import { ourFileRouter } from "./api/uploadthing/core"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,21 +26,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light">
           <AuthProvider>
+          <QueryProvider>
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             <div className="flex min-h-screen flex-col">
               <Navbar />
               <main className="flex-1">{children}</main>
               <Footer />
               <Toaster />
             </div>
+          </QueryProvider>
           </AuthProvider>
-        </ThemeProvider>
       </body>
     </html>
   )
 }
-
-
-
-import './globals.css'
