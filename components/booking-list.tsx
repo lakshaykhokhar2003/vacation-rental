@@ -114,7 +114,7 @@ export function BookingList({ bookings: propBookings, isLoading: propIsLoading, 
                         <p className="text-xs text-muted-foreground">Total price</p>
                       </div>
                       <Button variant="outline" size="sm" asChild>
-                        <Link href={`/booking/${booking.id}`}>
+                        <Link href={`/booking/confirmation?id=${booking.id}`}>
                           <Eye className="mr-1 h-4 w-4" />
                           View Details
                         </Link>
