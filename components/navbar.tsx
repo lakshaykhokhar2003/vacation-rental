@@ -3,7 +3,7 @@
 import {useState} from "react"
 import Link from "next/link"
 import {Button} from "@/components/ui/button"
-import {Globe, Heart, LogIn, LogOut, Menu, MessageSquare, PlusCircle, User, X} from "lucide-react"
+import {Heart, LogIn, LogOut, Menu, PlusCircle, User, X} from "lucide-react"
 import {useMediaQuery} from "react-responsive";
 import {useAuth} from "@/contexts/auth-context"
 import {
@@ -54,14 +54,9 @@ export function Navbar() {
         {!isMobile && (
           <div className="hidden items-center gap-4 md:flex">
             <Button variant="ghost" size="icon">
-              <Globe className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon">
               <Heart className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <MessageSquare className="h-5 w-5" />
-            </Button>
+
 
             {user ? (
               <DropdownMenu>
