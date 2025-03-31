@@ -27,7 +27,7 @@ export function PropertyReviews({ propertyId }: PropertyReviewsProps) {
       try {
 
         await new Promise((resolve) => setTimeout(resolve, 1000))
-        const avatar = "https://picsum.photos/random/1200.webp"
+        const avatar = "https://picsum.photos/1200.webp"
 
         const mockReviews: Review[] = [
           {
