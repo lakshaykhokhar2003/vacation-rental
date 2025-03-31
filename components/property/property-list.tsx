@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -20,92 +20,46 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Edit, MoreVertical, Trash2, Calendar, Eye } from "lucide-react"
+import { useUserProperties, useDeleteProperty } from "@/hooks/use-properties"
+import { useAuth } from "@/contexts/auth-context"
+import type { Property } from "@/lib/services/property-service"
 
-interface Property {
-  id: string
-  title: string
-  location: string
-  price: number
-  image: string
-  status: "active" | "draft" | "archived"
+interface PropertyListProps {
+  properties?: Property[]
+  isLoading?: boolean
+  emptyMessage?: string
 }
 
-export function PropertyList() {
-  const [properties, setProperties] = useState<Property[]>([])
-  const [loading, setLoading] = useState(true)
+export function PropertyList({
+                               properties: propProperties,
+                               isLoading: propIsLoading,
+                               emptyMessage,
+                             }: PropertyListProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const { toast } = useToast()
+  const { user } = useAuth()
 
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        // In a real app, this would fetch from Firestore
-        // For now, we'll use mock data
+  const { data: fetchedProperties, isLoading: isFetchingProperties } = useUserProperties(user?.uid, {
+    enabled: !propProperties && !!user?.uid,
+  })
 
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+  const properties = propProperties || fetchedProperties
+  const isLoading = propIsLoading || isFetchingProperties
 
-        // Mock data
-        const mockProperties: Property[] = [
-          {
-            id: "1",
-            title: "Luxury Beach Villa",
-            location: "Malibu, California",
-            price: 350,
-            image: "/placeholder.svg?height=500&width=800",
-            status: "active",
-          },
-          {
-            id: "2",
-            title: "Mountain Retreat Cabin",
-            location: "Aspen, Colorado",
-            price: 275,
-            image: "/placeholder.svg?height=500&width=800",
-            status: "active",
-          },
-          {
-            id: "3",
-            title: "Modern Downtown Loft",
-            location: "New York City, New York",
-            price: 225,
-            image: "/placeholder.svg?height=500&width=800",
-            status: "draft",
-          },
-        ]
-
-        setProperties(mockProperties)
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Failed to load properties",
-          variant: "destructive",
-        })
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchProperties()
-  }, [toast])
+  const deletePropertyMutation = useDeleteProperty()
 
   const handleDelete = async (id: string) => {
     try {
-      // In a real app, this would delete from Firestore
-      // For now, we'll just update the local state
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500))
-
-      setProperties(properties.filter((property) => property.id !== id))
+      await deletePropertyMutation.mutateAsync(id)
 
       toast({
         title: "Property deleted",
         description: "The property has been successfully deleted",
       })
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Error",
-        description: "Failed to delete property",
+        description: error.message || "Failed to delete property",
         variant: "destructive",
       })
     } finally {
@@ -113,124 +67,129 @@ export function PropertyList() {
     }
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {[1, 2, 3].map((i) => (
-          <Card key={i}>
-            <Skeleton className="h-[200px] w-full rounded-t-lg" />
-            <CardContent className="p-4">
-              <Skeleton className="h-6 w-3/4 mb-2" />
-              <Skeleton className="h-4 w-1/2 mb-4" />
-              <Skeleton className="h-4 w-1/4" />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+              <Card key={i}>
+                <Skeleton className="h-[200px] w-full rounded-t-lg" />
+                <CardContent className="p-4">
+                  <Skeleton className="h-6 w-3/4 mb-2" />
+                  <Skeleton className="h-4 w-1/2 mb-4" />
+                  <Skeleton className="h-4 w-1/4" />
+                </CardContent>
+              </Card>
+          ))}
+        </div>
     )
   }
 
-  if (properties.length === 0) {
+  if (!properties || properties.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
-        <h3 className="mb-2 text-xl font-semibold">No properties yet</h3>
-        <p className="mb-6 text-muted-foreground">Add your first property to get started</p>
-        <Button asChild>
-          <Link href="/dashboard/properties/new">Add New Property</Link>
-        </Button>
-      </div>
+        <div className="flex flex-col items-center justify-center py-12">
+          <h3 className="mb-2 text-xl font-semibold">No properties yet</h3>
+          <p className="mb-6 text-muted-foreground">{emptyMessage || "Add your first property to get started"}</p>
+          <Button asChild>
+            <Link href="/dashboard/properties/new">Add New Property</Link>
+          </Button>
+        </div>
     )
   }
 
   return (
-    <>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {properties.map((property, index) => (
-          <motion.div
-            key={property.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-          >
-            <Card>
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-lg">
-                <Image src={property.image || "/placeholder.svg"} alt={property.title} fill className="object-cover" />
-                {property.status !== "active" && (
-                  <div className="absolute top-2 right-2 bg-black/70 px-2 py-1 text-xs font-medium text-white rounded">
-                    {property.status === "draft" ? "Draft" : "Archived"}
+      <>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {properties.map((property, index) => (
+              <motion.div
+                  key={property.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <Card>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-lg">
+                    <Image
+                        src={property.images[0] || "/placeholder.svg"}
+                        alt={property.title}
+                        fill
+                        className="object-cover"
+                    />
+                    {!property.isAvailable && (
+                        <div className="absolute top-2 right-2 bg-black/70 px-2 py-1 text-xs font-medium text-white rounded">
+                          Not Available
+                        </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <CardContent className="p-4">
-                <h3 className="mb-1 text-lg font-semibold line-clamp-1">{property.title}</h3>
-                <p className="mb-2 text-sm text-muted-foreground">{property.location}</p>
-                <p className="font-medium">
-                  ${property.price} <span className="text-sm font-normal text-muted-foreground">/ night</span>
-                </p>
-              </CardContent>
-              <CardFooter className="flex items-center justify-between p-4 pt-0">
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href={`/dashboard/properties/${property.id}`}>
-                      <Edit className="mr-1 h-4 w-4" />
-                      Edit
-                    </Link>
-                  </Button>
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href={`/dashboard/properties/${property.id}/calendar`}>
-                      <Calendar className="mr-1 h-4 w-4" />
-                      Availability
-                    </Link>
-                  </Button>
-                </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem asChild>
-                      <Link href={`/property/${property.id}`}>
-                        <Eye className="mr-2 h-4 w-4" />
-                        View Listing
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="text-destructive focus:text-destructive"
-                      onClick={() => setDeleteId(property.id)}
-                    >
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </CardFooter>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
+                  <CardContent className="p-4">
+                    <h3 className="mb-1 text-lg font-semibold line-clamp-1">{property.title}</h3>
+                    <p className="mb-2 text-sm text-muted-foreground">{property.location}</p>
+                    <p className="font-medium">
+                      ${property.price} <span className="text-sm font-normal text-muted-foreground">/ night</span>
+                    </p>
+                  </CardContent>
+                  <CardFooter className="flex items-center justify-between p-4 pt-0">
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/dashboard/properties/${property.id}`}>
+                          <Edit className="mr-1 h-4 w-4" />
+                          Edit
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/dashboard/properties/${property.id}/calendar`}>
+                          <Calendar className="mr-1 h-4 w-4" />
+                          Availability
+                        </Link>
+                      </Button>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem asChild>
+                          <Link href={`/property/${property.id}`}>
+                            <Eye className="mr-2 h-4 w-4" />
+                            View Listing
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            className="text-destructive focus:text-destructive"
+                            onClick={() => setDeleteId(property.id)}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </CardFooter>
+                </Card>
+              </motion.div>
+          ))}
+        </div>
 
-      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the property and all associated data.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              onClick={() => deleteId && handleDelete(deleteId)}
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
+        <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the property and all associated data.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  onClick={() => deleteId && handleDelete(deleteId)}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </>
   )
 }
 

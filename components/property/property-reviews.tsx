@@ -15,7 +15,7 @@ interface Review {
 }
 
 interface PropertyReviewsProps {
-  propertyId: string
+  propertyId: string | number
 }
 
 export function PropertyReviews({ propertyId }: PropertyReviewsProps) {
@@ -25,18 +25,15 @@ export function PropertyReviews({ propertyId }: PropertyReviewsProps) {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        // In a real app, this would fetch from Firestore
-        // For now, we'll use mock data
 
-        // Simulate API call
         await new Promise((resolve) => setTimeout(resolve, 1000))
+        const avatar = "https://picsum.photos/random/1200.webp"
 
-        // Mock data
         const mockReviews: Review[] = [
           {
             id: "1",
             name: "Sarah Johnson",
-            avatar: "/placeholder.svg?height=100&width=100",
+            avatar,
             date: "August 2023",
             rating: 5,
             comment:
@@ -45,7 +42,7 @@ export function PropertyReviews({ propertyId }: PropertyReviewsProps) {
           {
             id: "2",
             name: "David Chen",
-            avatar: "/placeholder.svg?height=100&width=100",
+            avatar,
             date: "July 2023",
             rating: 4,
             comment:
@@ -54,7 +51,7 @@ export function PropertyReviews({ propertyId }: PropertyReviewsProps) {
           {
             id: "3",
             name: "Emma Rodriguez",
-            avatar: "/placeholder.svg?height=100&width=100",
+            avatar,
             date: "June 2023",
             rating: 5,
             comment:

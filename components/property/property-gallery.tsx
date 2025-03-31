@@ -15,13 +15,9 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [showFullscreen, setShowFullscreen] = useState(false)
 
-  const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length)
-  }
+  const nextImage = () => setCurrentIndex((prev) => (prev + 1) % images.length)
 
-  const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
+  const prevImage = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
 
   return (
     <>
@@ -37,7 +33,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
                 src={image || "/placeholder.svg"}
                 alt={`Property image ${index + 2}`}
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
           ))}
