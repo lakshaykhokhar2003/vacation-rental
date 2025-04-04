@@ -1,8 +1,7 @@
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
+import {footerCompanyItems, footerExploreItems, footerSocialItems, footerSupportItems} from "@/lib/footerUtils";
 
 export function Footer() {
   return (
@@ -17,70 +16,37 @@ export function Footer() {
               Find and book the perfect vacation rental for your next getaway.
             </p>
             <div className="flex gap-4">
-              <Button variant="ghost" size="icon" aria-label="Facebook">
-                <Facebook className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Instagram">
-                <Instagram className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Twitter">
-                <Twitter className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="YouTube">
-                <Youtube className="h-5 w-5" />
-              </Button>
+              {footerSocialItems.map((item) => (
+                <Button key={item.label} variant="ghost" size="icon" aria-label={item.label}>
+                  {item.icon}
+                </Button>
+              ))}
             </div>
           </div>
 
           <div>
             <h3 className="mb-4 text-lg font-semibold">Explore</h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  Find Rentals
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  Destinations
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  Experiences
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  Reviews
-                </Link>
-              </li>
+              {footerExploreItems.map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-muted-foreground hover:text-primary">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
             <h3 className="mb-4 text-lg font-semibold">Company</h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
-                  Press
-                </Link>
-              </li>
+              {footerCompanyItems.map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-muted-foreground hover:text-primary">
+                    {item.label}
+                    </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -102,15 +68,11 @@ export function Footer() {
               © {new Date().getFullYear()} StayHere. All rights reserved.
             </p>
             <div className="flex gap-4 text-sm">
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                Terms of Service
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
-                Cookie Policy
-              </Link>
+              {footerSupportItems.map((item) => (
+                  <Link href={item.href} key={item.label} className="text-muted-foreground hover:text-primary">
+                    {item.label}
+                    </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -118,4 +80,3 @@ export function Footer() {
     </footer>
   )
 }
-
