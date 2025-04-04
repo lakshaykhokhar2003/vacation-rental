@@ -9,6 +9,7 @@ import {QueryProvider} from "@/lib/providers/query-provider"
 import {Toaster} from "@/components/ui/toaster"
 import {NextSSRPlugin} from "@uploadthing/react/next-ssr-plugin"
 import {extractRouterConfig} from "uploadthing/server"
+import { Analytics } from "@vercel/analytics/react"
 import {ourFileRouter} from "./api/uploadthing/core"
 
 const inter = Inter({subsets: ["latin"]})
@@ -39,6 +40,7 @@ export default function RootLayout({
                 </Suspense>
             </QueryProvider>
         </AuthProvider>
+        <Analytics/>
         </body>
         </html>
     )
