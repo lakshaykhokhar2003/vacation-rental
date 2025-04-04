@@ -11,9 +11,6 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <div className="relative h-8 w-8">
-                <Image src="/placeholder.svg?height=32&width=32" alt="StayHere Logo" fill className="object-contain" />
-              </div>
               <span className="text-xl font-bold text-primary">StayHere</span>
             </Link>
             <p className="mb-4 text-muted-foreground">
