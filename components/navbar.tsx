@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {deleteCookie} from "cookies-next";
+import {LoadingBeam} from "@/components/loading-beam";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -104,7 +105,7 @@ export function Navbar() {
           </Button>
         )}
       </div>
-
+      <LoadingBeam/>
       {/* Mobile Menu */}
       {isMobile && isMenuOpen && (
         <div className="absolute top-16 left-0 z-50 w-full bg-white shadow-lg">
