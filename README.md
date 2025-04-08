@@ -112,7 +112,7 @@ A quick look at StayScape's UI and user experience, from browsing properties to 
 
 ---
 
-### 🛠️ Add & Edit Property
+### 🧰 Add & Edit Property
 
 - ![Add Property](/public/screenshots/add-property.png)
 - ![Edit Property](/public/screenshots/edit-property.png)
@@ -221,7 +221,7 @@ You'll need active accounts for these services to integrate and deploy:
    ```
 4. Open your browser and navigate to `http://localhost:3000` to view the application.
 
-### 🛠️ Environment Variables
+### 📖 Environment Variables
 
    ```
    #Firebase
