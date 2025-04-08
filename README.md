@@ -13,13 +13,13 @@
     - [💳 Payment & Booking Confirmation](#-payment--booking-confirmation)
     - [📅 Availability Calendar View](#-availability-calendar-view)
     - [📊 Dashboard & Booking Management](#-dashboard--booking-management)
-    - [🛠️ Add & Edit Property](#-add--edit-property)
+    - [🧰 Add & Edit Property](#-add--edit-property)
     - [🔐 Authentication (Login / Signup)](#-authentication-login--signup)
 - [🧱 Tech Stack](#-tech-stack)
 - [🚀 Getting Started](#-getting-started)
     - [📦 Prerequisites](#-prerequisites)
     - [🔧 Installation](#-installation)
-    - [🛠️ Environment Variables](#-environment-variables)
+    - [📖 Environment Variables](#-environment-variables)
 - [📄 License](#-license)
 
 ## 🌟 Overview
