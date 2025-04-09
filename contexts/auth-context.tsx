@@ -15,6 +15,7 @@ import {getCookie, setCookie} from "cookies-next";
 import {addDays} from "date-fns";
 import {useRouter} from "next/navigation";
 import {createOrUpdateUser} from "@/lib/services/user-service";
+import {toast} from "@/hooks/use-toast";
 
 interface AuthContextType {
   user: User | null
@@ -85,7 +86,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await createOrUpdateUser({uid: response.user.uid, email:( response.user.email as string), displayName: (response.user.displayName as string) ,photoURL: response.user.photoURL || "",})
       router.push('/')
     } catch (error) {
-        console.log("An unknown error occurred");
+        toast({
+            title: "Error",
+            description: "Something went wrong while signing in with Google.",
+            variant: "destructive",
+        })
     }
   };
 

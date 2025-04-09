@@ -70,7 +70,6 @@ export function ImageUploadThing({ maxImages = 5, value = [], onChange, onRemove
                         endpoint="propertyImage"
                         onClientUploadComplete={(res) => {
                             const newUrls = res.map((file) => file.url)
-                            console.log("UploadThing upload complete. New URLs:", newUrls)
 
                             const updatedImages = [...images, ...newUrls]
                             setImages(updatedImages)
