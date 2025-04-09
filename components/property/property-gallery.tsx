@@ -4,7 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import {Dialog, DialogContent, DialogTitle} from "@/components/ui/dialog"
 import { ChevronLeft, ChevronRight, X, Maximize2 } from "lucide-react"
 
 interface PropertyGalleryProps {
@@ -50,7 +50,9 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
       </div>
 
       <Dialog open={showFullscreen} onOpenChange={setShowFullscreen}>
-        <DialogContent className="max-w-7xl h-[90vh] p-0">
+        <DialogContent className="max-w-7xl h-[90vh] p-0 border-0">
+          <DialogTitle className="sr-only"/>
+
           <div className="relative h-full w-full flex items-center justify-center bg-black">
             <Button
               variant="ghost"

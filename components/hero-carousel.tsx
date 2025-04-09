@@ -4,17 +4,11 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
-import HeroImage1 from "@/public/hero/photo1.webp"
-import HeroImage2 from "@/public/hero/photo1.webp"
-import HeroImage3 from "@/public/hero/photo1.webp"
-import HeroImage4 from "@/public/hero/photo1.webp"
-
-
 const carouselImages = [
-    HeroImage1,
-    HeroImage2,
-    HeroImage3,
-    HeroImage4,
+    "/hero/photo1.webp",
+    "/hero/photo2.webp",
+    "/hero/photo3.webp",
+    "/hero/photo4.webp",
 ]
 
 export function HeroCarousel() {
@@ -47,7 +41,7 @@ export function HeroCarousel() {
                         quality={85}
                         className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/40" />
+                    <div className="absolute inset-0 bg-black/40"/>
                 </div>
             ))}
         </div>
