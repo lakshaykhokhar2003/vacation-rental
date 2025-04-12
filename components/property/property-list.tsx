@@ -112,7 +112,9 @@ export function PropertyList({
                         src={property.images[0] || "/placeholder.svg"}
                         alt={property.title}
                         fill
+                        priority
                         className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     {!property.isAvailable && (
                         <div className="absolute top-2 right-2 bg-black/70 px-2 py-1 text-xs font-medium text-white rounded">

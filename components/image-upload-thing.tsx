@@ -114,6 +114,7 @@ export function ImageUploadThing({ maxImages = 5, value = [], onChange, onRemove
                                 alt={`Property image ${index + 1}`}
                                 fill
                                 className="object-cover"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <Button
                                 type="button"

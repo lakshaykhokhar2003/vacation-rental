@@ -93,7 +93,7 @@ export function PropertyReviews({ propertyId }: PropertyReviewsProps) {
         <div key={review.id} className="border-b pb-6">
           <div className="flex items-center gap-4 mb-2">
             <div className="relative h-12 w-12 overflow-hidden rounded-full">
-              <Image src={review.avatar || "/placeholder.svg"} alt={review.name} fill className="object-cover" />
+              <Image src={review.avatar || "/placeholder.svg"} width={48} height={48} alt={review.name} className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
             </div>
             <div>
               <h4 className="font-medium">{review.name}</h4>

@@ -9,6 +9,7 @@ import {Badge} from "@/components/ui/badge"
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardFooter} from "@/components/ui/card"
 import {Bed, Bath, Users, Heart, Star, ChevronLeft, ChevronRight, MapPin} from "lucide-react"
+import {useRouter} from "next/navigation";
 
 interface Property {
     id: number | string
@@ -30,6 +31,7 @@ interface PropertyCardProps {
 }
 
 export function PropertyCard({property}: PropertyCardProps) {
+    const router = useRouter()
     const [isFavorite, setIsFavorite] = useState(false)
 
     const allImages =
@@ -85,15 +87,15 @@ export function PropertyCard({property}: PropertyCardProps) {
                 onMouseEnter={pauseAutoRotation}
                 onMouseLeave={resumeAutoRotation}
             >
-                <Link href={`/property/${property.id}`}>
                     <Image
                         src={allImages[currentImageIndex] || "/placeholder.svg"}
                         alt={property.title}
                         fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                         priority
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        onClick={()=> router.push(`/property/${property.id}`)}
                     />
-                </Link>
 
                 {allImages.length > 1 && (
                     <>

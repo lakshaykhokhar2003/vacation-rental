@@ -4,7 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import {Dialog, DialogContent, DialogTitle} from "@/components/ui/dialog"
+import {Dialog, DialogContent, DialogDescription, DialogTitle} from "@/components/ui/dialog"
 import { ChevronLeft, ChevronRight, X, Maximize2 } from "lucide-react"
 
 interface PropertyGalleryProps {
@@ -24,7 +24,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
       <div className="relative">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2 rounded-lg overflow-hidden">
           <div className="md:col-span-2 md:row-span-2 relative aspect-[4/3] md:aspect-square">
-            <Image src={images[0] || "/placeholder.svg"} alt="Property main image" fill className="object-cover" />
+            <Image src={images[0] || "/placeholder.svg"} alt="Property main image" fill priority className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
           </div>
 
           {images.slice(1, 5).map((image, index) => (
@@ -33,7 +33,9 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
                 src={image || "/placeholder.svg"}
                 alt={`Property image ${index + 2}`}
                 fill
+                priority
                 className="object-contain"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
           ))}
@@ -52,6 +54,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
       <Dialog open={showFullscreen} onOpenChange={setShowFullscreen}>
         <DialogContent className="max-w-7xl h-[90vh] p-0 border-0">
           <DialogTitle className="sr-only"/>
+          <DialogDescription className="sr-only"/>
 
           <div className="relative h-full w-full flex items-center justify-center bg-black">
             <Button
@@ -66,7 +69,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 h-full"
               onClick={prevImage}
             >
               <ChevronLeft className="h-8 w-8" />
@@ -86,6 +89,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
                   alt={`Property image ${currentIndex + 1}`}
                   fill
                   className="object-contain"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </motion.div>
             </AnimatePresence>
@@ -93,7 +97,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-white/20 h-full"
               onClick={nextImage}
             >
               <ChevronRight className="h-8 w-8" />

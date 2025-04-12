@@ -135,7 +135,7 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
               <h2 className="text-xl font-semibold mb-4">Hosted by {owner?.displayName || "Owner"}</h2>
               <div className="flex items-center gap-4">
                 <div className="relative h-16 w-16 overflow-hidden rounded-full">
-                  <Image src={owner?.photoURL || "/placeholder.svg?height=100&width=100"} alt="Host" fill className="object-cover" />
+                  <Image src={owner?.photoURL || "/placeholder.svg?height=100&width=100"} alt="Host" fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
                 </div>
                 <div>
                   <p className="text-muted-foreground">
