@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {footerCompanyItems, footerExploreItems, footerSocialItems, footerSupportItems} from "@/lib/footerUtils";
@@ -10,6 +11,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link href="/" className="mb-4 flex items-center gap-2">
+              <Image src={"/logo.svg"} alt="Logo" width={40} height={40} className="h-8 w-8" />
               <span className="text-xl font-bold text-primary">StayHere</span>
             </Link>
             <p className="mb-4 text-muted-foreground">

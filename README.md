@@ -1,4 +1,9 @@
-# StayHere - Vacation Rental Platform
+<p align="center">
+  <img src="public/logo.svg" alt="logo" width="150"/>
+</p>
+
+<h1 align="center">StayHere - Vacation Rental Platform</h1>
+
 
 ### A modern, full-featured vacation rental platform built with Next.js, Firebase, and Stripe
 

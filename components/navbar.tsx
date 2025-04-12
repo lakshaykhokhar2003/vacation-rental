@@ -2,6 +2,7 @@
 
 import {useState} from "react"
 import Link from "next/link"
+import Image from "next/image"
 import {Button} from "@/components/ui/button"
 import {Heart, LogIn, LogOut, Menu, PlusCircle, User, X} from "lucide-react"
 import {useMediaQuery} from "react-responsive";
@@ -31,6 +32,7 @@ export function Navbar() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
 
         <Link href="/" className="flex items-center gap-2">
+          <Image src={"/logo.svg"} alt="Logo" width={40} height={40} className="h-8 w-8" />
           <span className="text-xl font-bold text-primary">StayHere</span>
         </Link>
 

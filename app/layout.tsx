@@ -17,6 +17,9 @@ const inter = Inter({subsets: ["latin"]})
 export const metadata: Metadata = {
     title: "StayHere - Find Your Perfect Vacation Rental",
     description: "Discover and book unique accommodations around the world",
+    icons:{
+        icon: "/logo.svg",
+    }
 }
 
 export default function RootLayout({
