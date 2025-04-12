@@ -48,7 +48,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!authCookie) {
         await signOut(auth);
         setUser(null);
-        router.push("/")
       } else {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           setUser(user)
