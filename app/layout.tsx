@@ -10,6 +10,7 @@ import {Toaster} from "@/components/ui/toaster"
 import {NextSSRPlugin} from "@uploadthing/react/next-ssr-plugin"
 import {extractRouterConfig} from "uploadthing/server"
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import {ourFileRouter} from "./api/uploadthing/core"
 
 const inter = Inter({subsets: ["latin"]})
@@ -44,6 +45,7 @@ export default function RootLayout({
             </QueryProvider>
         </AuthProvider>
         <Analytics/>
+        <SpeedInsights/>
         </body>
         </html>
     )
