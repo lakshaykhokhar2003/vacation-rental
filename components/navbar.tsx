@@ -1,6 +1,6 @@
 "use client"
 
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import Link from "next/link"
 import Image from "next/image"
 import {Button} from "@/components/ui/button"
@@ -19,6 +19,7 @@ import {LoadingBeam} from "@/components/loading-beam";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const isMobile = useMediaQuery({maxWidth: 768})
   const { user, logOut } = useAuth()
 
@@ -26,6 +27,15 @@ export function Navbar() {
     logOut()
     deleteCookie('auth')
   }
+
+  useEffect(() => {
+    if(typeof window !== "undefined") {
+      setIsMounted(true)
+    }
+
+  }, []);
+
+  if (!isMounted) return <div className="h-16 w-full bg-white" />
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">

@@ -1,87 +1,107 @@
-"use client"
 import Link from "next/link"
-import {motion} from "framer-motion"
+// import {motion} from "framer-motion"
 import {Button} from "@/components/ui/button"
-import {Card, CardContent} from "@/components/ui/card"
-import {Skeleton} from "@/components/ui/skeleton"
-import {useFeaturedProperties} from "@/hooks/use-properties"
+// import {Card, CardContent} from "@/components/ui/card"
+// import {Skeleton} from "@/components/ui/skeleton"
+// import {useFeaturedProperties} from "@/hooks/use-properties"
 import {PropertyCard} from "@/components/property/property-card";
 import {HeroCarousel} from "@/components/hero-carousel";
 import type React from "react";
+import {getFeaturedProperties} from "@/lib/services/property-service";
 
-export default function Home() {
-  const { data: properties, isLoading, error } = useFeaturedProperties()
+export default async function Home() {
+  const newProperties = await getFeaturedProperties()
+  const properties = newProperties.map((property => ({
+    ...property,
+    createdAt: property.createdAt.toDate().getTime(),  // gives a number
+    updatedAt: property.updatedAt.toDate().getTime(),
+  })))
+
+
+  // const { data: properties, isLoading, error } = useFeaturedProperties()
 
   return (
         <main>
-          <section className="relative h-[80vh] flex items-center justify-center">
+          {/*<section className="relative h-[80vh] flex items-center justify-center">*/}
             <HeroCarousel/>
-            <div className="relative z-10 text-center px-4 text-white">
-              <motion.h1
-                  initial={{opacity: 0, y: 20}}
-                  animate={{opacity: 1, y: 0}}
-                  transition={{duration: 0.5}}
-                  className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl"
-              >
-                Find Your Perfect Vacation Rental
-              </motion.h1>
-              <motion.p
-                  initial={{opacity: 0, y: 20}}
-                  animate={{opacity: 1, y: 0}}
-                  transition={{duration: 0.5, delay: 0.1}}
-                  className="mb-8 max-w-2xl text-lg md:text-xl"
-              >
-                Discover amazing properties around the world for your next adventure
-              </motion.p>
-              <motion.div
-                  initial={{opacity: 0, y: 20}}
-                  animate={{opacity: 1, y: 0}}
-                  transition={{duration: 0.5, delay: 0.2}}
-              >
-                <Button asChild size="lg" className="text-lg">
-                  <Link href="/properties">Explore Properties</Link>
-                </Button>
-              </motion.div>
-            </div>
-          </section>
+            {/*<div className="relative z-10 text-center px-4 text-white">*/}
+            {/*  <motion.h1*/}
+            {/*      initial={{opacity: 0, y: 20}}*/}
+            {/*      animate={{opacity: 1, y: 0}}*/}
+            {/*      transition={{duration: 0.5}}*/}
+            {/*      className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl"*/}
+            {/*  >*/}
+            {/*    Find Your Perfect Vacation Rental*/}
+            {/*  </motion.h1>*/}
+            {/*  <motion.p*/}
+            {/*      initial={{opacity: 0, y: 20}}*/}
+            {/*      animate={{opacity: 1, y: 0}}*/}
+            {/*      transition={{duration: 0.5, delay: 0.1}}*/}
+            {/*      className="mb-8 max-w-2xl text-lg md:text-xl"*/}
+            {/*  >*/}
+            {/*    Discover amazing properties around the world for your next adventure*/}
+            {/*  </motion.p>*/}
+            {/*  <motion.div*/}
+            {/*      initial={{opacity: 0, y: 20}}*/}
+            {/*      animate={{opacity: 1, y: 0}}*/}
+            {/*      transition={{duration: 0.5, delay: 0.2}}*/}
+            {/*  >*/}
+            {/*    <Button asChild size="lg" className="text-lg">*/}
+            {/*      <Link href="/properties">Explore Properties</Link>*/}
+            {/*    </Button>*/}
+            {/*  </motion.div>*/}
+            {/*</div>*/}
+          {/*</section>*/}
 
           <section id="featured-properties" className="container mx-auto py-16 px-4">
             <h2 className="mb-8 text-3xl font-bold">Featured Properties</h2>
 
-            {isLoading ? (
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {Array.from({length: 8}).map((_, index) => (
-                      <Card key={index} className="overflow-hidden">
-                        <Skeleton className="aspect-[4/3] w-full"/>
-                        <CardContent className="p-4">
-                          <Skeleton className="h-6 w-3/4 mb-2"/>
-                          <Skeleton className="h-4 w-1/2 mb-4"/>
-                          <div className="flex justify-between">
-                            <Skeleton className="h-4 w-1/4"/>
-                            <Skeleton className="h-4 w-1/4"/>
-                          </div>
-                        </CardContent>
-                      </Card>
-                  ))}
-                </div>
-            ) : error ? (
-                <div className="text-center py-8">
-                  <p className="text-red-500">Failed to load properties. Please try again later.</p>
-                </div>
-            ) : (
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {properties?.map((property) => (
-                      <motion.div
-                          key={property.id}
-                          initial={{opacity: 0, y: 20}}
-                          animate={{opacity: 1, y: 0}}
-                          transition={{duration: 0.5}}
-                      >
-                        <PropertyCard key={property.id} property={property}/>
-                      </motion.div>
-                  ))}
-                </div>
-            )}
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {properties?.map((property) => (
+                  <div
+                      key={property.id}
+                      // initial={{opacity: 0, y: 20}}
+                      // animate={{opacity: 1, y: 0}}
+                      // transition={{duration: 0.5}}
+                  >
+                    <PropertyCard key={property.id} property={property}/>
+                  </div>
+              ))}
+            </div>
+            {/*{isLoading ? (*/}
+            {/*    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">*/}
+            {/*      {Array.from({length: 8}).map((_, index) => (*/}
+            {/*          <Card key={index} className="overflow-hidden">*/}
+            {/*            <Skeleton className="aspect-[4/3] w-full"/>*/}
+            {/*            <CardContent className="p-4">*/}
+            {/*              <Skeleton className="h-6 w-3/4 mb-2"/>*/}
+            {/*              <Skeleton className="h-4 w-1/2 mb-4"/>*/}
+            {/*              <div className="flex justify-between">*/}
+            {/*                <Skeleton className="h-4 w-1/4"/>*/}
+            {/*                <Skeleton className="h-4 w-1/4"/>*/}
+            {/*              </div>*/}
+            {/*            </CardContent>*/}
+            {/*          </Card>*/}
+            {/*      ))}*/}
+            {/*    </div>*/}
+            {/*) : error ? (*/}
+            {/*    <div className="text-center py-8">*/}
+            {/*      <p className="text-red-500">Failed to load properties. Please try again later.</p>*/}
+            {/*    </div>*/}
+            {/*) : (*/}
+            {/*    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">*/}
+            {/*      {properties?.map((property) => (*/}
+            {/*          <motion.div*/}
+            {/*              key={property.id}*/}
+            {/*              initial={{opacity: 0, y: 20}}*/}
+            {/*              animate={{opacity: 1, y: 0}}*/}
+            {/*              transition={{duration: 0.5}}*/}
+            {/*          >*/}
+            {/*            <PropertyCard key={property.id} property={property}/>*/}
+            {/*          </motion.div>*/}
+            {/*      ))}*/}
+            {/*    </div>*/}
+            {/*)}*/}
 
             <div className="mt-8 text-center">
               <Button asChild variant="outline" size="lg">
