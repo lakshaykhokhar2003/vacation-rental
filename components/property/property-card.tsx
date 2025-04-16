@@ -93,7 +93,7 @@ export function PropertyCard({property}: PropertyCardProps) {
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                         priority
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        sizes="(max-width: 768px) 66vw, (max-width: 1200px) 50vw, 60vw"
                         onClick={()=> router.push(`/property/${property.id}`)}
                     />
 
