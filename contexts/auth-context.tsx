@@ -66,14 +66,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const data = response.user
     await createOrUpdateUser({uid: data?.uid, email: email, displayName: data?.displayName ? data?.displayName : (data?.email as string).slice(0, (data?.email as string).indexOf("@")), role: 'guest'})
     setUser(data)
-    setCookie('auth',email,{expires: addDays(new Date(),30)});
+    setCookie('auth',data?.uid,{expires: addDays(new Date(),30)});
   }
 
   const signIn = async (email: string, password: string) => {
     const response = await signInWithEmailAndPassword(auth, email, password)
     await createOrUpdateUser({uid: response.user.uid})
     setUser(response.user)
-    setCookie('auth',response.user.email,{expires: addDays(new Date(),30)});
+    setCookie('auth',response.user.uid,{expires: addDays(new Date(),30)});
   }
 
   const signInWithGoogle = async () => {
@@ -81,7 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const provider = new GoogleAuthProvider();
       const response = await signInWithPopup(auth, provider);
       setUser(response.user);
-      setCookie('auth',response.user.email,{expires: addDays(new Date(),30)});
+      setCookie('auth',response.user.uid,{expires: addDays(new Date(),30)});
       await createOrUpdateUser({uid: response.user.uid, email:( response.user.email as string), displayName: (response.user.displayName as string) ,photoURL: response.user.photoURL || "",})
       router.push('/')
     } catch (error) {
