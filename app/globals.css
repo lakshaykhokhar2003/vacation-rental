@@ -120,3 +120,52 @@ body {
   background-color: black;
   margin: 10px;
 }
+
+/* Animation for property cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.property-card {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.feature-card {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Staggered animation for feature cards */
+.feature-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.feature-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.feature-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+/* Image loading animation */
+@keyframes imageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.image-loading {
+  animation: imageFadeIn 0.5s ease;
+}
