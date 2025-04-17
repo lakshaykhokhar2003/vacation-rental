@@ -24,7 +24,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
       <div className="relative">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2 rounded-lg overflow-hidden">
           <div className="md:col-span-2 md:row-span-2 relative aspect-[4/3] md:aspect-square">
-            <Image src={images[0] || "/placeholder.svg"} alt="Property main image" fill priority className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
+            <Image src={images[0] || "/placeholder.svg"} alt="Property main image" fill priority className="object-cover" sizes="(max-width: 768px) 45vw, (max-width: 1200px) 66vw, 100vw"/>
           </div>
 
           {images.slice(1, 5).map((image, index) => (
@@ -35,7 +35,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
                 fill
                 priority
                 className="object-contain"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 45vw, (max-width: 1200px) 66vw, 100vw"
               />
             </div>
           ))}
