@@ -15,16 +15,15 @@ import {Skeleton} from "@/components/ui/skeleton"
 import {useProperty} from "@/hooks/use-properties"
 import {use} from "react";
 import {useUser} from "@/hooks/use-user";
-import {useAuth} from "@/contexts/auth-context";
+import {getCookie} from "cookies-next";
 import Link from "next/link";
 
 export default function PropertyDetails({ params }: { params: Promise<{ id: string }>}) {
   const {id} = use(params)
-  const {user} = useAuth()
   const router = useRouter()
   const { data: property, isLoading, error } = useProperty(id)
   const { data: owner, isLoading: ownerLoading, error: ownerError } = useUser(property?.ownerId || "")
-  const isOwner = user && property?.ownerId === user.uid
+  const isOwner = getCookie("auth") === property?.ownerId
   if (isLoading || ownerLoading) {
     return (
         <div className="container mx-auto py-8 px-4">
