@@ -4,19 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Star } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
-
-interface Review {
-  id: string
-  name: string
-  avatar: string
-  date: string
-  rating: number
-  comment: string
-}
-
-interface PropertyReviewsProps {
-  propertyId: string | number
-}
+import {PropertyReviewsProps, Review} from "@/types";
 
 export function PropertyReviews({ propertyId }: PropertyReviewsProps) {
   const [reviews, setReviews] = useState<Review[]>([])

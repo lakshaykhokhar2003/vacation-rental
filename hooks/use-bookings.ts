@@ -1,5 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
-import type {Booking} from "@/lib/services/bookings-service"
+import {Booking} from "@/types";
 import {
     checkAvailability,
     createBooking,

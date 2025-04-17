@@ -8,7 +8,7 @@ import {
     deleteProperty,
     getFeaturedProperties,
 } from "@/lib/services/property-service"
-import type { Property } from "@/lib/services/property-service"
+import type { PropertyProps as Property } from "@/types"
 
 export function useProperties() {
     return useQuery({

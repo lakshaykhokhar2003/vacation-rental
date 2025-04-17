@@ -16,29 +16,7 @@ import {
     where,
 } from "firebase/firestore"
 
-export interface Property {
-    id: string
-    ownerId: string
-    title: string
-    description: string
-    location: string
-    coordinates: {
-        lat: number
-        lng: number
-    }
-    price: number
-    images: string[]
-    beds: number
-    baths: number
-    guests: number
-    amenities: string[]
-    isSuperhost: boolean
-    rating: number
-    reviews: number
-    createdAt: any
-    updatedAt: any
-    isAvailable: boolean
-}
+import type {PropertyProps as Property} from "@/types"
 
 export const createProperty = async (propertyData: Omit<Property, "id">): Promise<string> => {
     try {

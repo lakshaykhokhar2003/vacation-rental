@@ -1,8 +1,5 @@
 import { Check } from "lucide-react"
-
-interface PropertyAmenitiesProps {
-  amenities: string[]
-}
+import {PropertyAmenitiesProps} from "@/types";
 
 export function PropertyAmenities({ amenities }: PropertyAmenitiesProps) {
   return (

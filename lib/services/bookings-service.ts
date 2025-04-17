@@ -12,30 +12,7 @@ import {
     Timestamp,
     where,
 } from "firebase/firestore"
-
-export interface Booking {
-    id: string
-    propertyId: string
-    userId: string
-    checkIn: Timestamp
-    checkOut: Timestamp
-    guests: number
-    totalPrice: number
-    status: "pending" | "confirmed" | "cancelled" | "completed"
-    guestInfo: {
-        name: string
-        email: string
-        phone?: string
-    }
-    guestNames?: string[]
-    paymentInfo?: {
-        paymentId: string
-        paymentMethod: string
-        paymentStatus: string
-    }
-    createdAt?: Timestamp
-    updatedAt?: Timestamp
-}
+import {Booking} from "@/types";
 
 export const createBooking = async (bookingData: Omit<Booking, "id">): Promise<string> => {
     try {

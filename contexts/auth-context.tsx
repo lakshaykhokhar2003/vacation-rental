@@ -16,15 +16,7 @@ import {addDays} from "date-fns";
 import {useRouter} from "next/navigation";
 import {createOrUpdateUser} from "@/lib/services/user-service";
 import {toast} from "@/hooks/use-toast";
-
-interface AuthContextType {
-  user: User | null
-  loading: boolean
-  signUp: (email: string, password: string) => Promise<void>
-  signIn: (email: string, password: string) => Promise<void>
-  signInWithGoogle: () => Promise<void>
-  logOut: () => Promise<void>
-}
+import {AuthContextType} from "@/types";
 
 const AuthContext = createContext<AuthContextType>({
   user: null,

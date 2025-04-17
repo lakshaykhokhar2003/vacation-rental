@@ -6,10 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import {Dialog, DialogContent, DialogDescription, DialogTitle} from "@/components/ui/dialog"
 import { ChevronLeft, ChevronRight, X, Maximize2 } from "lucide-react"
-
-interface PropertyGalleryProps {
-  images: string[]
-}
+import {PropertyGalleryProps} from "@/types";
 
 export function PropertyGallery({ images }: PropertyGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0)

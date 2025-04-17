@@ -12,16 +12,7 @@ import {
     Link,
     Preview,
 } from '@react-email/components';
-
-interface EmailTemplateProps {
-    bookingId: string;
-    propertyTitle: string;
-    checkIn: string;
-    checkOut: string;
-    nights: number;
-    total: number;
-    guestName: string;
-}
+import {EmailTemplateProps} from "@/types";
 
 const primaryColor = '#0a84ff';
 const lightColor = '#f0f7ff';

@@ -1,14 +1,7 @@
 "use client"
 
 import { MapPin } from "lucide-react"
-
-interface PropertyMapProps {
-  location: string
-  coordinates: {
-    lat: number
-    lng: number
-  }
-}
+import {PropertyMapProps} from "@/types";
 
 export function PropertyMap({ location, coordinates }: PropertyMapProps) {
   return (

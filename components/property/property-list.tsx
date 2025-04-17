@@ -22,13 +22,7 @@ import {
 import { Edit, MoreVertical, Trash2, Calendar, Eye } from "lucide-react"
 import { useUserProperties, useDeleteProperty } from "@/hooks/use-properties"
 import { useAuth } from "@/contexts/auth-context"
-import type { Property } from "@/lib/services/property-service"
-
-interface PropertyListProps {
-  properties?: Property[]
-  isLoading?: boolean
-  emptyMessage?: string
-}
+import {PropertyListProps} from "@/types";
 
 export function PropertyList({
                                properties: propProperties,

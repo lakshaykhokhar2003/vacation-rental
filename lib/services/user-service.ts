@@ -1,16 +1,6 @@
 import {db} from "@/lib/firebase"
 import {doc, getDoc, setDoc, Timestamp, updateDoc} from "firebase/firestore"
-
-export interface User {
-    uid: string
-    email: string
-    displayName: string
-    photoURL?: string
-    phone?: string
-    role: "guest" | "host" | "admin"
-    createdAt: Timestamp
-    updatedAt: Timestamp
-}
+import {User} from "@/types";
 
 export const createOrUpdateUser = async (userData: Partial<User>): Promise<void> => {
     try {

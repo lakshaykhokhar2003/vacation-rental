@@ -11,13 +11,7 @@ import { X, ImageIcon } from "lucide-react"
 import { UTUploadDropzone } from "@/lib/providers/upload-provider"
 import { useToast } from "@/hooks/use-toast"
 import { useUploadThing } from "@/hooks/use-upload-thing"
-
-interface ImageUploadThingProps {
-    maxImages?: number
-    value?: string[]
-    onChange?: (urls: string[]) => void
-    onRemove?: (url: string) => void
-}
+import {ImageUploadThingProps} from "@/types";
 
 export function ImageUploadThing({ maxImages = 5, value = [], onChange, onRemove }: ImageUploadThingProps) {
     const [images, setImages] = useState<string[]>(value)

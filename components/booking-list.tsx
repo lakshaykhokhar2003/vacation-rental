@@ -9,13 +9,8 @@ import {Badge} from "@/components/ui/badge"
 import {Calendar, Eye, MapPin, User} from "lucide-react"
 import {useUserBookings} from "@/hooks/use-bookings"
 import {useAuth} from "@/contexts/auth-context"
-import {Booking} from "@/lib/services/bookings-service";
+import {Booking, BookingListProps} from "@/types";
 
-interface BookingListProps {
-  bookings?: Booking[]
-  isLoading?: boolean
-  emptyMessage?: string
-}
 
 export function BookingList({ bookings: propBookings, isLoading: propIsLoading, emptyMessage }: BookingListProps) {
   const { user } = useAuth()

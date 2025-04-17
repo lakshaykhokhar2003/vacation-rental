@@ -19,21 +19,9 @@ import {useCheckAvailability, useCreateBooking} from "@/hooks/use-bookings"
 import {Timestamp} from "firebase/firestore"
 import {loadStripe} from "@stripe/stripe-js"
 import SignInPrompt from "@/components/SignInPrompt";
+import {BookingFormProps} from "@/types";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "")
-
-interface Property {
-  id: string
-  title: string
-  price: number
-  guests: number
-  unavailableDates?: (string | Timestamp)[]
-  isAvailable: boolean
-}
-
-interface BookingFormProps {
-  property: Property
-}
 
 const formSchema = z
     .object({

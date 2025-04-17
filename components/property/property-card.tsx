@@ -10,25 +10,8 @@ import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardFooter} from "@/components/ui/card"
 import {Bed, Bath, Users, Heart, Star, ChevronLeft, ChevronRight, MapPin} from "lucide-react"
 import {useRouter} from "next/navigation";
+import {PropertyCardProps} from "@/types";
 
-interface Property {
-    id: number | string
-    title: string
-    location: string
-    price: number
-    rating: number
-    reviews: number
-    images?: string[]
-    beds: number
-    baths: number
-    guests: number
-    amenities: string[]
-    isSuperhost: boolean
-}
-
-interface PropertyCardProps {
-    property: Property
-}
 
 export function PropertyCard({property}: PropertyCardProps) {
     const router = useRouter()

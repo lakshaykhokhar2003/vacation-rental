@@ -17,6 +17,7 @@ import { Loader2, Save } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { useProperty } from "@/hooks/use-properties"
 import { useCreateProperty, useUpdateProperty } from "@/hooks/use-properties"
+import {PropertyFormProps} from "@/types";
 
 const formSchema = z.object({
     title: z.string().min(5, { message: "Title must be at least 5 characters" }),
@@ -46,9 +47,6 @@ const amenitiesList = [
     { id: "bbq", label: "BBQ Grill" },
 ]
 
-interface PropertyFormProps {
-    propertyId?: string
-}
 
 export function PropertyForm({ propertyId }: PropertyFormProps) {
     const [deletedImages, setDeletedImages] = useState<string[]>([])
