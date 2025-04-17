@@ -1,4 +1,5 @@
 import {Timestamp} from "firebase/firestore";
+import {User as UserAuth} from "firebase/auth";
 
 export type BookingProperty = {
     id: string
@@ -143,7 +144,7 @@ export type ImageUploadThingProps = {
 }
 
 export type AuthContextType = {
-    user: User | null
+    user: UserAuth | null
     loading: boolean
     signUp: (email: string, password: string) => Promise<void>
     signIn: (email: string, password: string) => Promise<void>
@@ -151,7 +152,7 @@ export type AuthContextType = {
     logOut: () => Promise<void>
 }
 
-export interface User {
+export type User = {
     uid: string
     email: string
     displayName: string
