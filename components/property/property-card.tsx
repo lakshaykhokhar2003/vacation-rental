@@ -9,9 +9,10 @@ import {Badge} from "@/components/ui/badge"
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardFooter} from "@/components/ui/card"
 import {Bed, Bath, Users, Heart, Star, ChevronLeft, ChevronRight, MapPin} from "lucide-react"
-import {useRouter} from "next/navigation";
-import {PropertyCardProps} from "@/types";
-
+import {useRouter} from "next/navigation"
+import {motion, AnimatePresence, type PanInfo} from "framer-motion"
+import type {PropertyCardProps} from "@/types"
+import {useMediaQuery} from "react-responsive"
 
 export function PropertyCard({property}: PropertyCardProps) {
     const router = useRouter()
@@ -25,10 +26,15 @@ export function PropertyCard({property}: PropertyCardProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const autoRotateTimerRef = useRef<NodeJS.Timeout | null>(null)
     const [isPaused, setIsPaused] = useState(false)
+    const [direction, setDirection] = useState(0)
+    const [_, setDragStart] = useState(0)
+    const [isMounted, setIsMounted] = useState(false)
+    const isMobile = useMediaQuery({"maxWidth": 768})
 
     useEffect(() => {
         if (allImages.length > 1 && !isPaused) {
             autoRotateTimerRef.current = setInterval(() => {
+                setDirection(1)
                 setCurrentImageIndex((prev) => (prev + 1) % allImages.length)
             }, 5000)
         }
@@ -40,20 +46,27 @@ export function PropertyCard({property}: PropertyCardProps) {
         }
     }, [allImages.length, isPaused])
 
-    const pauseAutoRotation = () => setIsPaused(true)
+    useEffect(() => {
+        if(typeof window !== "undefined") setIsMounted(true)
+        }, []);
 
+    if (!isMounted) return <div className="h-96 w-full bg-white" />
+
+    const pauseAutoRotation = () => setIsPaused(true)
 
     const resumeAutoRotation = () => setIsPaused(false)
 
     const nextImage = (e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
+        setDirection(1)
         setCurrentImageIndex((prev) => (prev + 1) % allImages.length)
     }
 
     const prevImage = (e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
+        setDirection(-1)
         setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length)
     }
 
@@ -63,6 +76,42 @@ export function PropertyCard({property}: PropertyCardProps) {
         setIsFavorite(!isFavorite)
     }
 
+    const handleDragStart = (e: MouseEvent | PointerEvent | TouchEvent) => {
+        if ("clientX" in e) {
+            setDragStart(e.clientX)
+        } else if (e.touches && e.touches[0]) {
+            setDragStart(e.touches[0].clientX)
+            setCurrentImageIndex((prev) => (prev - 1) % allImages.length)
+        }
+        pauseAutoRotation()
+    }
+
+    const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+        const dragThreshold = 50
+
+        if (info.offset.x < -dragThreshold) {
+            setDirection(1)
+            setCurrentImageIndex((prev) => (prev + 1) % allImages.length)
+        } else if (info.offset.x > dragThreshold) {
+            setDirection(-1)
+            setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length)
+        }
+
+        resumeAutoRotation()
+    }
+
+    const slideVariants = {
+        enter: (direction: number) => ({
+            x: direction > 0 ? "100%" : "-100%",
+        }),
+        center: {
+            x: 0,
+        },
+        exit: (direction: number) => ({
+            x: direction > 0 ? "-100%" : "100%",
+        }),
+    }
+
     return (
         <Card className="group overflow-hidden transition-all hover:shadow-md">
             <div
@@ -70,17 +119,42 @@ export function PropertyCard({property}: PropertyCardProps) {
                 onMouseEnter={pauseAutoRotation}
                 onMouseLeave={resumeAutoRotation}
             >
-                    <Image
-                        src={allImages[currentImageIndex] || "/placeholder.svg"}
-                        alt={property.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                        priority
-                        sizes="(max-width: 768px) 66vw, (max-width: 1200px) 50vw, 60vw"
-                        onClick={()=> router.push(`/property/${property.id}`)}
-                    />
+                <AnimatePresence initial={false} custom={direction} >
+                    <motion.div
+                        key={currentImageIndex}
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{
+                            x: {type: "spring", stiffness: 500, damping: 50},
+                        }}
+                        className="absolute inset-0 w-full h-full"
+                        {...(isMobile
+                            ? {
+                                drag: "x",
+                                onDragStart: handleDragStart,
+                                onDragEnd: handleDragEnd,
+                                dragConstraints: { left: 0, right: 0 },
+                                dragElastic: 0.7,
+                            }
+                            : {})}
+                    >
+                        <Image
+                            src={allImages[currentImageIndex] || "/placeholder.jpg"}
+                            alt={property.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                            priority
+                            sizes="(max-width: 768px) 66vw, (max-width: 1200px) 50vw, 33vw"
+                            onClick={() => router.push(`/property/${property.id}`)}
+                            draggable={false}
+                        />
+                    </motion.div>
+                </AnimatePresence>
 
-                {allImages.length > 1 && (
+                {allImages.length > 1 && !isMobile && (
                     <>
                         <Button
                             variant="ghost"
@@ -189,4 +263,3 @@ export function PropertyCard({property}: PropertyCardProps) {
         </Card>
     )
 }
-
