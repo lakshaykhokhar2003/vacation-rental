@@ -20,25 +20,16 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Edit, MoreVertical, Trash2, Calendar, Eye } from "lucide-react"
-import { useUserProperties, useDeleteProperty } from "@/hooks/use-properties"
-import { useAuth } from "@/contexts/auth-context"
+import {useDeleteProperty } from "@/hooks/use-properties"
 import {PropertyListProps} from "@/types";
 
 export function PropertyList({
-                               properties: propProperties,
-                               isLoading: propIsLoading,
+                               properties,
+                               isLoading,
                                emptyMessage,
                              }: PropertyListProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const { toast } = useToast()
-  const { user } = useAuth()
-
-  const { data: fetchedProperties, isLoading: isFetchingProperties } = useUserProperties(user?.uid, {
-    enabled: !propProperties && !!user?.uid,
-  })
-
-  const properties = propProperties || fetchedProperties
-  const isLoading = propIsLoading || isFetchingProperties
 
   const deletePropertyMutation = useDeleteProperty()
 
