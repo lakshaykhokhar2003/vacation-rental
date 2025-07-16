@@ -6,6 +6,8 @@ import { SkeletonProperty } from "@/components/property/skeleton-property-card"
 import { Suspense } from "react"
 import { getFeaturedProperties } from "@/lib/services/property-service"
 
+export  const revalidate = 60
+
 async function FeaturedProperties() {
   const newProperties = await getFeaturedProperties()
   const properties = newProperties.map((property) => ({
